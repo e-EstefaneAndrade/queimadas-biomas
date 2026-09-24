@@ -26,10 +26,12 @@ Análise e previsão de focos de queimadas a partir de dados abertos do INPE, co
 
 _Preencha após a modelagem: tabela de métricas (baseline vs modelo), principais gráficos e aprendizados._
 
-| Modelo | MAE |
+| Modelo | MAE (focos/mês)|
 |---|---|
-| Baseline sazonal | – |
-| LightGBM | – |
+| Baseline sazonal | 3.506 |
+| LightGBM | 2.702 |
+
+Teste: jan/2024 a dez/2025, três biomas juntos. O LightGBM reduziu o erro médio em cerca de 23%.
 
 ## Como reproduzir
 
