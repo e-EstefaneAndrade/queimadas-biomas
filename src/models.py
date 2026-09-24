@@ -20,12 +20,24 @@ def seasonal_naive(test: pd.DataFrame) -> np.ndarray:
     return test["lag_12"].to_numpy()
 
 
+def build_X(df: pd.DataFrame, columns=None) -> pd.DataFrame:
+    """Monta a matriz de entrada (features + bioma em dummies)."""
+    X = pd.get_dummies(df[FEATURES + ["bioma"]], columns=["bioma"])
+    if columns is not None:
+        X = X.reindex(columns=columns, fill_value=0)
+    return X
+
+
 def train_lgbm(train: pd.DataFrame) -> LGBMRegressor:
     model = LGBMRegressor(n_estimators=400, learning_rate=0.05, random_state=42, verbose=-1)
-    # bioma como categoria permite um único modelo comparar os três biomas
-    X = pd.get_dummies(train[FEATURES + ["bioma"]], columns=["bioma"])
+    X = build_X(train)
     model.fit(X, train["focos"])
     return model
+
+
+def predict(model: LGBMRegressor, df: pd.DataFrame) -> np.ndarray:
+    X = build_X(df, columns=model.feature_name_)
+    return model.predict(X)
 
 
 def evaluate(test: pd.DataFrame, preds: np.ndarray) -> dict:
