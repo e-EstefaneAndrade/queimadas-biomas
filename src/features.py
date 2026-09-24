@@ -17,6 +17,13 @@ def monthly_counts(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def seasonal_average(monthly: pd.DataFrame) -> pd.DataFrame:
+    """Média de focos por mês do ano (1-12), para cada bioma."""
+    out = monthly.copy()
+    out["mes_numero"] = out["mes"].dt.month
+    return out.groupby(["bioma", "mes_numero"])["focos"].mean().reset_index()
+
+
 def add_features(monthly: pd.DataFrame, lags=(1, 2, 3, 12)) -> pd.DataFrame:
     """Adiciona lags, média móvel e sazonalidade cíclica (por bioma)."""
     monthly = monthly.sort_values(["bioma", "mes"]).copy()
