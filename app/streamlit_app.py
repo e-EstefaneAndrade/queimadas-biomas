@@ -49,14 +49,14 @@ col1.metric("Total de focos no período", f"{total_focos:,}".replace(",", "."))
 col2.metric("Mês com mais focos", pico["mes"].strftime("%m/%Y"))
 col3.metric("Focos nesse mês", f"{int(pico['focos']):,}".replace(",", "."))
 
-st.subheader("Focos por mês")
-st.plotly_chart(px.line(view, x="mes", y="focos", color="bioma"), use_container_width=True)
+st.subheader("Evolução mensal dos focos")
+st.plotly_chart(px.line(view, x="mes", y="focos", color="bioma"), width="stretch")
 
 st.subheader("Sazonalidade média (dia do ano todo)")
 sazonalidade = features.seasonal_average(view)
 st.plotly_chart(
     px.bar(sazonalidade, x="mes_numero", y="focos", color="bioma", barmode="group"),
-    use_container_width=True,
+    width="stretch",
 )
 
 st.subheader("Focos por ano e mês (todos os biomas selecionados)")
@@ -64,4 +64,4 @@ total_mes = view.groupby("mes")["focos"].sum().reset_index()
 total_mes["ano"] = total_mes["mes"].dt.year
 total_mes["mes_numero"] = total_mes["mes"].dt.month
 pivot = total_mes.pivot(index="ano", columns="mes_numero", values="focos")
-st.plotly_chart(px.imshow(pivot, color_continuous_scale="Oranges", aspect="auto"), use_container_width=True)
+st.plotly_chart(px.imshow(pivot, color_continuous_scale="Oranges", aspect="auto"), width="stretch")
