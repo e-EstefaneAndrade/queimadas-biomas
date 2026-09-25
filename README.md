@@ -22,6 +22,13 @@ Análise e previsão de focos de queimadas a partir de dados abertos do INPE, co
 5. Interpretação com SHAP
 6. Dashboard em Streamlit
 
+## Dashboard
+
+![Visão geral](reports/figures/dashboard.png)
+![Sazonalidade](reports/figures/dashboard2.png)
+
+Rode com `streamlit run app/streamlit_app.py` para explorar os dados de forma interativa.
+
 ## Resultados
 
 _Preencha após a modelagem: tabela de métricas (baseline vs modelo), principais gráficos e aprendizados._
