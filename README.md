@@ -26,6 +26,7 @@ Análise e previsão de focos de queimadas a partir de dados abertos do INPE, co
 
 ![Visão geral](reports/figures/dashboard.png)
 ![Sazonalidade](reports/figures/dashboard2.png)
+![Focos por ano e mês](reports/figures/dashboard3.png)
 
 Rode com `streamlit run app/streamlit_app.py` para explorar os dados de forma interativa.
 
