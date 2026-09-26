@@ -6,7 +6,9 @@ import pandas as pd
 from lightgbm import LGBMRegressor
 from sklearn.metrics import mean_absolute_error
 
-FEATURES = ["lag_1", "lag_2", "lag_3", "lag_12", "media_movel_3", "mes_sin", "mes_cos"]
+FEATURES_HISTORICO = ["lag_1", "lag_2", "lag_3", "lag_12", "media_movel_3", "mes_sin", "mes_cos"]
+FEATURES_CLIMA = ["t2m", "precipitacao"]
+FEATURES = FEATURES_HISTORICO + FEATURES_CLIMA
 
 
 def time_split(df: pd.DataFrame, test_start: str):
@@ -20,23 +22,23 @@ def seasonal_naive(test: pd.DataFrame) -> np.ndarray:
     return test["lag_12"].to_numpy()
 
 
-def build_X(df: pd.DataFrame, columns=None) -> pd.DataFrame:
+def build_X(df: pd.DataFrame, columns=None, features: list[str] = FEATURES) -> pd.DataFrame:
     """Monta a matriz de entrada (features + bioma em dummies)."""
-    X = pd.get_dummies(df[FEATURES + ["bioma"]], columns=["bioma"])
+    X = pd.get_dummies(df[features + ["bioma"]], columns=["bioma"])
     if columns is not None:
         X = X.reindex(columns=columns, fill_value=0)
     return X
 
 
-def train_lgbm(train: pd.DataFrame) -> LGBMRegressor:
+def train_lgbm(train: pd.DataFrame, features: list[str] = FEATURES) -> LGBMRegressor:
     model = LGBMRegressor(n_estimators=400, learning_rate=0.05, random_state=42, verbose=-1)
-    X = build_X(train)
+    X = build_X(train, features=features)
     model.fit(X, train["focos"])
     return model
 
 
-def predict(model: LGBMRegressor, df: pd.DataFrame) -> np.ndarray:
-    X = build_X(df, columns=model.feature_name_)
+def predict(model: LGBMRegressor, df: pd.DataFrame, features: list[str] = FEATURES) -> np.ndarray:
+    X = build_X(df, columns=model.feature_name_, features=features)
     return model.predict(X)
 
 

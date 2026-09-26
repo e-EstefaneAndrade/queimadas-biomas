@@ -24,6 +24,11 @@ def seasonal_average(monthly: pd.DataFrame) -> pd.DataFrame:
     return out.groupby(["bioma", "mes_numero"])["focos"].mean().reset_index()
 
 
+def merge_climate(monthly: pd.DataFrame, clima: pd.DataFrame) -> pd.DataFrame:
+    """Junta a série de focos com o clima mensal (mesmo bioma e mês)."""
+    return monthly.merge(clima, on=["bioma", "mes"], how="left")
+
+
 def add_features(monthly: pd.DataFrame, lags=(1, 2, 3, 12)) -> pd.DataFrame:
     """Adiciona lags, média móvel e sazonalidade cíclica (por bioma)."""
     monthly = monthly.sort_values(["bioma", "mes"]).copy()

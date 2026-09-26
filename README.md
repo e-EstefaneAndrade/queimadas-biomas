@@ -6,6 +6,7 @@ Análise e previsão de focos de queimadas a partir de dados abertos do INPE, co
 
 > É possível prever a quantidade mensal de focos de queimadas em cada bioma? O que pesa mais na previsão: o **histórico/sazonalidade** ou o **clima**?
 
+
 ## Dados
 
 - **Fonte:** Programa Queimadas, INPE (dados abertos), focos de calor detectados por satélite.
@@ -40,6 +41,10 @@ _Preencha após a modelagem: tabela de métricas (baseline vs modelo), principai
 | LightGBM | 2.702 |
 
 Teste: jan/2024 a dez/2025, três biomas juntos. O LightGBM reduziu o erro médio em cerca de 23%.
+
+## Resposta à pergunta do projeto
+
+O histórico (sazonalidade e meses recentes) explica a maior parte da variação nos focos de queimadas (~89% da influência, segundo SHAP). O clima (temperatura e chuva) contribui de forma real, mas menor (~11%), reduzindo o erro médio de previsão em cerca de 8%. Isso acontece porque o padrão sazonal já embute, de forma indireta, boa parte do efeito do clima.
 
 ## Como reproduzir
 

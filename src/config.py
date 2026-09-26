@@ -18,3 +18,14 @@ YEAR_URL_TEMPLATE = (
 # Anos usados no projeto (2026 ainda não tem arquivo anual completo)
 FIRST_YEAR = 2015
 LAST_YEAR = 2025
+
+# Ponto representativo de cada bioma para consulta de clima (NASA POWER),
+# já que a API é por coordenada, não por polígono do bioma.
+CLIMATE_POINTS = {
+    "Amazônia": (-3.0, -60.0),   # região central, perto de Manaus
+    "Cerrado": (-15.0, -47.0),   # região central, perto de Brasília
+    "Pantanal": (-19.0, -57.0),  # região central, perto de Corumbá
+}
+
+CLIMATE_URL = "https://power.larc.nasa.gov/api/temporal/monthly/point"
+CLIMATE_CACHE = PROCESSED_DIR / "clima_mensal.csv"
