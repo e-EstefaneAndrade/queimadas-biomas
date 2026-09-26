@@ -11,7 +11,7 @@ Análise e previsão de focos de queimadas a partir de dados abertos do INPE, co
 
 - **Fonte:** Programa Queimadas, INPE (dados abertos), focos de calor detectados por satélite.
 - **Recorte:** biomas Amazônia, Cerrado e Pantanal; satélite de referência (evita contagem duplicada).
-- **Período:** _definir_ (ex.: 2018 a 2025).
+- **Período:** 2015 a 2025.
 - Os dados brutos **não** ficam no repositório. Use `src/data_loader.py` para baixá-los.
 
 ## Metodologia
@@ -20,8 +20,9 @@ Análise e previsão de focos de queimadas a partir de dados abertos do INPE, co
 2. Agregação mensal por bioma
 3. Análise exploratória e mapas (sazonalidade, tendência, diferenças entre biomas)
 4. Modelagem: baseline sazonal ingênuo vs LightGBM (com lags, média móvel e sazonalidade)
-5. Interpretação com SHAP
-6. Dashboard em Streamlit
+5. Coleta de clima (temperatura e chuva) via NASA POWER, e comparação entre um modelo só com histórico e outro com histórico + clima
+6. Interpretação com SHAP
+7. Dashboard em Streamlit
 
 ## Dashboard
 
@@ -32,8 +33,6 @@ Análise e previsão de focos de queimadas a partir de dados abertos do INPE, co
 Rode com `streamlit run app/streamlit_app.py` para explorar os dados de forma interativa.
 
 ## Resultados
-
-_Preencha após a modelagem: tabela de métricas (baseline vs modelo), principais gráficos e aprendizados._
 
 | Modelo | MAE (focos/mês)|
 |---|---|
@@ -73,13 +72,13 @@ streamlit run app/streamlit_app.py
 
 ## Roadmap
 
-- [ ] Coleta dos dados
-- [ ] EDA e mapas
-- [ ] Baseline + modelo de ML
-- [ ] Interpretação (SHAP)
-- [ ] Dashboard publicado
-- [ ] Incluir dados de desmatamento (PRODES/DETER) como variável extra
+- [x] Coleta dos dados
+- [x] EDA e mapas
+- [x] Baseline + modelo de ML
+- [x] Interpretação (SHAP)
+- [x] Dashboard publicado
+- [x] Incluir dados de clima (NASA POWER) como variável extra
 
 ## Autor
 
-_Seu nome · LinkedIn · pós em Ciência de Dados_
+Estefane Andrade
