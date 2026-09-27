@@ -16,3 +16,10 @@ venv/
 .DS_Store
 .vscode/
 .idea/
+
+# Dados (baixe com src/data_loader.py)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/processed/focos_mensais.csv
