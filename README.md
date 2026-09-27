@@ -2,6 +2,8 @@
 
 Análise e previsão de focos de queimadas a partir de dados abertos do INPE, comparando o comportamento de três biomas.
 
+🔗 **[Ver dashboard ao vivo](https://queimadas-biomas.streamlit.app)**
+
 ## Pergunta central
 
 > É possível prever a quantidade mensal de focos de queimadas em cada bioma? O que pesa mais na previsão: o **histórico/sazonalidade** ou o **clima**?
@@ -25,6 +27,8 @@ Análise e previsão de focos de queimadas a partir de dados abertos do INPE, co
 7. Dashboard em Streamlit
 
 ## Dashboard
+
+🔗 **[Acesse o dashboard publicado](https://queimadas-biomas.streamlit.app)**
 
 ![Visão geral](reports/figures/dashboard.png)
 ![Sazonalidade](reports/figures/dashboard2.png)
