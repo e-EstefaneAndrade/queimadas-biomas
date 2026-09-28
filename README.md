@@ -37,18 +37,20 @@ Análise e previsão de focos de queimadas a partir de dados abertos do INPE, co
 
 Rode com `streamlit run app/streamlit_app.py` para explorar os dados de forma interativa.
 
-## Resultados
+## Resultado principal
+
+**O LightGBM reduziu o erro médio de previsão em ~23% em relação ao baseline sazonal (3.506 → 2.702 focos/mês).**
 
 | Modelo | MAE (focos/mês)|
 |---|---|
 | Baseline sazonal | 3.506 |
 | LightGBM | 2.702 |
 
-Teste: jan/2024 a dez/2025, três biomas juntos. O LightGBM reduziu o erro médio em cerca de 23%.
+**Divisão temporal:** treino com os dados de 2015 a 2023; teste com jan/2024 a dez/2025 (não vistos pelo modelo durante o treino), três biomas juntos. A divisão é feita por data de corte, sem embaralhar os meses, para evitar que o modelo "veja o futuro" durante o treino (vazamento temporal). O LightGBM reduziu o erro médio (MAE) em cerca de 23% em relação ao baseline sazonal.
 
 ## Resposta à pergunta do projeto
 
-O histórico (sazonalidade e meses recentes) explica a maior parte da variação nos focos de queimadas (~89% da influência, segundo SHAP). O clima (temperatura e chuva) contribui de forma real, mas menor (~11%), reduzindo o erro médio de previsão em cerca de 8%. Isso acontece porque o padrão sazonal já embute, de forma indireta, boa parte do efeito do clima.
+Na interpretação do modelo (SHAP), as variáveis de histórico e sazonalidade concentraram cerca de 89% da magnitude média das contribuições às previsões, contra 11% das variáveis climáticas. Isso não significa que o histórico "causa" 89% das queimadas, é uma medida de quanto cada grupo de variáveis pesou nas previsões do modelo, não uma relação de causa e efeito comprovada. Ainda assim, incluir temperatura e chuva melhorou o desempenho preditivo em cerca de 8% (MAE) no experimento realizado, o que indica que o clima carrega informação que o histórico sozinho não captura.
 
 ## Previsão para o resto de 2026
 
@@ -89,13 +91,21 @@ streamlit run app/streamlit_app.py
 
 ## Roadmap
 
+### Concluído
+
 - [x] Coleta dos dados
 - [x] EDA e mapas
 - [x] Baseline + modelo de ML
-- [x] Interpretação (SHAP)
+- [x] Interpretação com SHAP
 - [x] Dashboard publicado
-- [x] Incluir dados de clima (NASA POWER) como variável extra
-- [x] Previsão dos próximos meses (set–dez/2026)
+- [x] Dados de clima (NASA POWER)
+- [x] Previsão para setembro–dezembro/2026, com checagem retroativa
+
+### Próximos passos
+
+- [ ] Atualizar a previsão conforme novos dados do INPE forem saindo
+- [ ] Testar outros modelos (ex.: Prophet, SARIMA com exógenas)
+- [ ] Trazer mais variáveis climáticas (umidade, vento) por bioma
 
 ## Autor
 
