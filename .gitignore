@@ -4,6 +4,11 @@ data/processed/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 
+# Exceções: arquivos pequenos que o dashboard usa
+!data/processed/focos_mensais.csv
+!data/processed/focos_mensais_atualizado.csv
+!data/processed/previsao.csv
+
 # Python
 __pycache__/
 *.pyc
@@ -16,10 +21,3 @@ venv/
 .DS_Store
 .vscode/
 .idea/
-
-# Dados (baixe com src/data_loader.py)
-data/raw/*
-data/processed/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
-!data/processed/focos_mensais.csv
