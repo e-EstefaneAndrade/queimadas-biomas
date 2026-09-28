@@ -90,3 +90,31 @@ def filter_reference(df: pd.DataFrame, biomes: list[str] = BIOMES) -> pd.DataFra
     (O nome da função foi mantido; o arquivo já contém só o satélite de referência.)
     """
     return df[df["bioma"].isin(biomes)].copy()
+
+
+REFERENCE_SATELLITE = "AQUA_M-T"
+
+
+def load_recent(raw_dir: Path, biomes: list[str] = BIOMES) -> pd.DataFrame:
+    """Lê os arquivos mensais recentes (ano corrente), formato com várias colunas extras.
+
+    Diferente dos arquivos anuais, estes trazem focos de vários satélites, então
+    filtramos pelo satélite de referência (AQUA_M-T) para manter a série comparável.
+    """
+    files = sorted(raw_dir.glob("*.csv"))
+    if not files:
+        raise FileNotFoundError(f"Nenhum CSV encontrado em {raw_dir}")
+
+    df = pd.concat((_read_one(f) for f in files), ignore_index=True)
+    df.columns = [c.strip().lower() for c in df.columns]
+
+    for col in df.columns:
+        df[col] = df[col].str.strip()
+
+    df = df[df["satelite"] == REFERENCE_SATELLITE]
+    df = df[df["bioma"].isin(biomes)].copy()
+
+    df["lat"] = pd.to_numeric(df["lat"], errors="coerce")
+    df["lon"] = pd.to_numeric(df["lon"], errors="coerce")
+    df["datahora"] = pd.to_datetime(df["data_hora_gmt"], errors="coerce")
+    return df.dropna(subset=["datahora"])

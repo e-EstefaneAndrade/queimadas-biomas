@@ -24,6 +24,8 @@ def _parse_response(data: dict, bioma: str) -> pd.DataFrame:
         mes = chave[-2:]
         if mes == "13":  # "13" é a média/total anual, não um mês
             continue
+        if valor_temp == -999 or chuva[chave] == -999:  # mês ainda sem dado
+            continue
         ano = chave[:4]
         linhas.append(
             {
@@ -50,7 +52,12 @@ def fetch_bioma_climate(bioma: str, lat: float, lon: float, first_year: int, las
 def load_climate(first_year: int, last_year: int, use_cache: bool = True) -> pd.DataFrame:
     """Baixa (ou lê do cache) o clima mensal de todos os biomas em CLIMATE_POINTS."""
     if use_cache and CLIMATE_CACHE.exists():
-        return pd.read_csv(CLIMATE_CACHE, parse_dates=["mes"])
+        em_cache = pd.read_csv(CLIMATE_CACHE, parse_dates=["mes"])
+        cobre_periodo = (
+            em_cache["mes"].min().year <= first_year and em_cache["mes"].max().year >= last_year
+        )
+        if cobre_periodo:
+            return em_cache
 
     partes = [
         fetch_bioma_climate(bioma, lat, lon, first_year, last_year)
